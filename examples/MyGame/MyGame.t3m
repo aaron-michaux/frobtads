@@ -1,0 +1,8 @@
+
+-D LANGUAGE=en_us
+-D MESSAGESTYLE=neu
+-o MyGame.t3
+-I ../../tads3/include
+-lib ../../tads3/lib/system
+-lib ../../tads3/lib/adv3/adv3
+-source MyGame

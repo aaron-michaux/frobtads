@@ -1,0 +1,11 @@
+IFID: b8563851-6257-77c3-04ee-278ceaeb48ac
+Name: My First Game
+Byline: by Bob Author
+AuthorEmail: Bob Author <bob@myisp.com>
+Desc: This is an example of how to start a new game project. 
+Version: 1
+ReleaseDate: 2020-03-06
+Language: en-US
+LicenseType: Freeware
+CopyingRules: Nominal cost only; compilations allowed
+PresentationProfile: Default
