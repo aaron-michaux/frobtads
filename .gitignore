@@ -1,6 +1,9 @@
 *.[oa]
 Makefile
 Makefile.in
+/build.log
+/file-list_*.text
+/wasm-frob
 /frob
 /frobd
 /t3make
