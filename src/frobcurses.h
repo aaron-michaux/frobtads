@@ -25,11 +25,11 @@
 extern "C" {
 #endif
 
-#ifdef HAVE_NCURSES_H
+#ifdef WASMTADS
+#include "no-curses.h"
+#elif defined HAVE_NCURSES_H
 #include <ncurses.h>
-#endif
-
-#ifdef HAVE_CURSES_H
+#elif defined HAVE_CURSES_H
 #include <curses.h>
 #endif
 

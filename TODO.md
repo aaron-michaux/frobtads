@@ -16,7 +16,6 @@
    + src/frobcurses.h
    + src/frobtadsappcurses.cc
    + src/osportable.cc
-   + src/ost3comp.cc
  * curl
    + tads3/unix/osnetunix.cpp
    + tads3/unix/osnetunix.h

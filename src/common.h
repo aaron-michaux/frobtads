@@ -11,6 +11,13 @@
 #include <sys/types.h>
 #endif
 
+/*
+ * WASMTADS: a division of FROBTADS
+ */
+#ifdef WASMTADS
+#define FROBTADS 1
+#endif
+
 /* Check for the existence of uchar, ushort, uint and ulong and define
  * the appropriate OS_*_DEFINED macros.
  */
@@ -51,14 +58,14 @@
 extern "C" {
 #endif
 #if TIME_WITH_SYS_TIME
-# include <sys/time.h>
-# include <time.h>
+#include <sys/time.h>
+#include <time.h>
 #else
-# if HAVE_SYS_TIME_H
-#  include <sys/time.h>
-# else
-#  include <time.h>
-# endif
+#if HAVE_SYS_TIME_H
+#include <sys/time.h>
+#else
+#include <time.h>
+#endif
 #endif
 #ifdef __cplusplus
 }
@@ -74,13 +81,13 @@ extern "C" {
  * support C99.
  */
 #ifndef HAVE_AND_KEYWORD
-#define and &&
+#define and&&
 #endif
 #ifndef HAVE_OR_KEYWORD
 #define or ||
 #endif
 #ifndef HAVE_NOT_KEYWORD
-#define not !
+#define not!
 #endif
 
 #endif /* __cplusplus */
