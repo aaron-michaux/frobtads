@@ -1,6 +1,9 @@
 *.[oa]
 Makefile
 Makefile.in
+wasm-frob.html
+wasm-frob.js
+*.wasm
 /build.log
 /file-list_*.text
 /wasm-frob
