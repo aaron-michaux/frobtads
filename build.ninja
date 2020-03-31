@@ -5,18 +5,18 @@ include project-config/toolchains/flags-emcc.ninja
 
 # ---------------------------------------------------------------- Configuration
 
-target = wasm-frob.html
+target = www/generated/wasm-frob.html
 
 rsrc_flags = -DT3_INC_DIR="\"/usr/local/share/frobtads/tads3/include\"" -DT3_LIB_DIR="\"/usr/local/share/frobtads/tads3/lib\"" -DT3_RES_DIR="\"/usr/local/share/frobtads/tads3/res\"" -DT3_LOG_FILE="\"/tmp/frob.log\""
 define_flags = -DHAVE_CONFIG_H -DRUNTIME -DWASMTADS -DTC_TARGET_T3 -DTADSNET -DOS_DECLARATIVE_TLS -DVMGLOB_VARS -D_M_IX86_64 -DRUNFAST
 include_flags = -I./ -Isrc -Itads2 -Itads3 -Itads3/wasm -Itads3/test
-f_flags = $f_flags -fno-strict-aliasing -flto=thin
+f_flags = $f_flags -fno-strict-aliasing -flto=full
 
 builddir   = /tmp/build/$target
-o_flag     = -O2
+o_flag     = -Oz
 c_flags    = $f_flags $o_flag $define_flags $include_flags $rsrc_flags
 cpp_flags  = -std=c++2a $f_flags $o_flag -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-ignored-qualifiers -Wno-infinite-recursion -Wno-sign-compare -Wno-sometimes-uninitialized -Wno-unused-variable $cpp_inc $include_flags $define_flags $rsrc_flags
-link_exec_flags = $link_libcpp_so -flto=thin -lpthread
+link_exec_flags = $link_libcpp_so -flto=full -lpthread -s EXPORTED_FUNCTIONS='["_test_function", "_main"]'
 
 # ------------------------------------------------------------------ Build Rules
 

@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en">
+<head>
+  <title>Interactive Fiction with Webassembly FrobTads</title>
+
+  <meta charset="utf-8" />
+  <meta name="description"
+        content="Webassembly port of FrobTADS, bringing TADS2 and TADS3 to the web." />
+  <meta name="keywords" content="Webassembly WASM FrobTADS TADS TADS2 TADS3 Interactive Fiction" />
+
+  <link rel="stylesheet" href="css/main.css" type="text/css" />
+</head>
+
+<body id="index" class="home">
+  Hello World!!
+  <div id="frob-container">
+    The Frob Container..
+  </div>
+
+  <!-- Load Javascript Here -->
+  <noscript>This demo relies on Javascript!</noscript>
+  <script>
+    // called when the runtime is ready
+
+    var call;
+    
+    var Module = {
+       onRuntimeInitialized: function () {
+          console.log('onRuntimeInitialized');
+    call = _test_function;
+    native();
+       }
+    };
+
+    // called from main()
+    function onLoaded() {
+       console.log('Module is loaded');    
+       native();
+    }
+
+    function native() {
+       var content = call(7, 3);
+       console.log(content);
+    }
+  </script>
+  <script async type="text/javascript" src="generated/wasm-frob.js"></script>
+</body>
+</html>

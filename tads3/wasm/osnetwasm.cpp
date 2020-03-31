@@ -1119,8 +1119,8 @@ OS_Thread::OS_Thread()
    /* create the event to signal at thread completion */
    done_evt = new OS_Event(TRUE);
 
-   /* add myself to the master thread list */
-   G_thread_list->add(this);
+   // /* add myself to the master thread list */
+   // G_thread_list->add(this);
 }
 
 OS_Thread::~OS_Thread()
@@ -1138,7 +1138,7 @@ OS_Thread::~OS_Thread()
    done_evt->release_ref();
 
    /* clean up the master thread list for our deletion */
-   if(G_thread_list != 0) G_thread_list->clean();
+   // if(G_thread_list != 0) G_thread_list->clean();
 
    /* count it for leak tracking */
    IF_LEAK_CHECK(thread_cnt.dec());
