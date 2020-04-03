@@ -15,8 +15,8 @@ f_flags = $f_flags -fno-strict-aliasing -flto=full
 builddir   = /tmp/build/$target
 o_flag     = -Oz
 c_flags    = $f_flags $o_flag $define_flags $include_flags $rsrc_flags
-cpp_flags  = -std=c++2a $f_flags $o_flag -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-ignored-qualifiers -Wno-infinite-recursion -Wno-sign-compare -Wno-sometimes-uninitialized -Wno-unused-variable $cpp_inc $include_flags $define_flags $rsrc_flags
-link_exec_flags = $link_libcpp_so -flto=full -lpthread -s EXPORTED_FUNCTIONS='["_test_function", "_main"]'
+cpp_flags  = -std=c++2a $f_flags $o_flag -Wall -Wextra -Wpedantic -Wno-unused-parameter -Wno-ignored-qualifiers -Wno-infinite-recursion -Wno-sign-compare -Wno-sometimes-uninitialized -Wno-unused-variable -Wno-gnu-zero-variadic-macro-arguments $cpp_inc $include_flags $define_flags $rsrc_flags
+link_exec_flags = $link_libcpp_so -flto=full -lpthread -s FETCH=1 -s EXPORTED_FUNCTIONS='["_init_t3", "_main"]'  
 
 # ------------------------------------------------------------------ Build Rules
 

@@ -19,30 +19,7 @@
 
   <!-- Load Javascript Here -->
   <noscript>This demo relies on Javascript!</noscript>
-  <script>
-    // called when the runtime is ready
-
-    var call;
-    
-    var Module = {
-       onRuntimeInitialized: function () {
-          console.log('onRuntimeInitialized');
-    call = _test_function;
-    native();
-       }
-    };
-
-    // called from main()
-    function onLoaded() {
-       console.log('Module is loaded');    
-       native();
-    }
-
-    function native() {
-       var content = call(7, 3);
-       console.log(content);
-    }
-  </script>
+  <script type="text/javascript" src="js/wasm-frob-loader.js"></script>
   <script async type="text/javascript" src="generated/wasm-frob.js"></script>
 </body>
 </html>

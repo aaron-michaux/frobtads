@@ -1,54 +1,36 @@
 
 // Hints: https://www.w3.org/wiki/JavaScript_best_practices
-// (1) Use `http://www.jslint.com/`
-/*
-// (2) Use modules with exports
-myNameSpace = function(){
-  var current = null;
-  function init(){...}
-  function change(){...}
-  function verify(){...}
-  return{
-    init:init,
-    set:change
-  }
-}();
 
-myNameSpace.init(...);
-myNameSpace.set(...);
-*/
+// called when the runtime is ready
+var WasmTads = null;
 
-wasmFrob = function() {
+var Module = {
+    onRuntimeInitialized: function () {
+        console.log('onRuntimeInitialized');
+        
+        // Final bit of glue for bindings
+        WasmTads = function() {            
 
-    var asmLibraryArg = { "__cxa_atexit": ___cxa_atexit, "__handle_stack_overflow": ___handle_stack_overflow, "__map_file": ___map_file, "__sys_munmap": ___sys_munmap, "abort": _abort, "emscripten_get_sbrk_ptr": _emscripten_get_sbrk_ptr, "emscripten_longjmp": _emscripten_longjmp, "emscripten_memcpy_big": _emscripten_memcpy_big, "emscripten_resize_heap": _emscripten_resize_heap, "environ_get": _environ_get, "environ_sizes_get": _environ_sizes_get, "fd_close": _fd_close, "fd_seek": _fd_seek, "fd_write": _fd_write, "memory": wasmMemory, "setTempRet0": _setTempRet0, "table": wasmTable };
-    
-    // This is our recommended way of loading WebAssembly.
-    function load() {
-        console.log("load");
+            function alloc_cstr_(s) {
+                return allocate(intArrayFromString(s), 'i8', ALLOC_NORMAL);
+            };
+            
+            function init_t3(t3_url) {                
+                var ptr  = alloc_cstr_(t3_url);
+                _init_t3(ptr);
+                _free(ptr);
+            }
 
-        var info = {
-            'env': asmLibraryArg,
-            'wasi_snapshot_preview1': asmLibraryArg
-        };
-
-        (async () => {
-            console.log("creating fetch-promise");
-            const data = await fetch('/frob.wasm');
-            console.log("doing compile, with promise = " + data);
-            const buffer = await data.arrayBuffer();
-            const module = await WebAssembly.compile(buffer);
-            console.log("instantiating");
-            const instance = await WebAssembly.instantiate(module, info);
-
-            // const { instance }
-            //       = await WebAssembly.instantiateStreaming(fetchPromise, importObject);
-            console.log("calculating result");
-            const result = instance.exports.test_function(7, 3);
-            console.log(result);
-        })();
+            return {
+                init_t3:init_t3
+            }
+        }();
     }
+};
 
-    return { load:load }
-}();
+// called from main()
+function onWasmTadsLoaded() {
+    console.log('WASM Tads module is loaded');
+    WasmTads.init_t3("MyGame.t3");
+}
 
-wasmFrob.load();
