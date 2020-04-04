@@ -39,12 +39,13 @@ using std::vector;
 
 struct T3Options
 {
-   bool placeholder = false; //
+   bool use_colors    = true;
+   bool pause_on_exit = false;
 };
 
 // ---------------------------------------------------------------------- run-t3
 
-static void run_t3(FILE* t3, const T3Options& opts)
+static void run_t3(FILE* t3_fp, const T3Options& opts)
 {
    printf("Hello World, from Run T3!\n");
 
@@ -60,21 +61,21 @@ static void run_t3(FILE* t3, const T3Options& opts)
    screenInterface interface = cursesInterface; // default
 
    // Increase the T3VM undo-size 16 times by default.
-   frobVmUndoMaxRecords                      = defaultVmUndoMaxRecords * 16;
-   FrobTadsApplication::FrobOptions frobOpts = {
+   frobVmUndoMaxRecords                       = defaultVmUndoMaxRecords * 16;
+   FrobTadsApplication::FrobOptions frob_opts = {
        // We assume some defaults.  They might change while
        // parsing the command line.
-       true,       // Use colors.
-       false,      // Don't force colors.
-       true,       // Use terminal's defaults for color pair 0.
-       true,       // Enable soft-scrolling.
-       true,       // Pause prior to exit.
-       true,       // Change to the game's directory.
-       FROB_WHITE, // Text.
-       FROB_BLACK, // Background.
-       -1,         // Statusline text; none yet.
-       -1,         // Statusline background; none yet.
-       512 * 1024, // Scroll-back buffer size.
+       opts.use_colors,    // Use colors.
+       false,              // Don't force colors.
+       true,               // Use terminal's defaults for color pair 0.
+       true,               // Enable soft-scrolling.
+       opts.pause_on_exit, // Pause prior to exit.
+       true,               // Change to the game's directory.
+       FROB_WHITE,         // Text.
+       FROB_BLACK,         // Background.
+       -1,                 // Statusline text; none yet.
+       -1,                 // Statusline background; none yet.
+       512 * 1024,         // Scroll-back buffer size.
        // Default file I/O safety level is read/write access
        // in current directory only.
        VM_IO_SAFETY_READWRITE_CUR,
@@ -85,16 +86,35 @@ static void run_t3(FILE* t3, const T3Options& opts)
        // TODO: Revert the default back to "\0" when Unicode output
        // is finally implemented.
        "us-ascii", // Character set.
-       0,          // Replay file.
+       nullptr,    // Replay file.
        true        // seedRand.
    };
+
+   frob_opts.statTextColor = frob_opts.bgColor;
+   frob_opts.statBgColor   = frob_opts.textColor;
 
    // Name of the game to run.
    const char* filename = nullptr; // how to load a file into WASM?
    printf("Have to load file into WASM applications\n");
 
    // Saved game position to restore (optional).
-   const char* savedPosFilename = nullptr;
+   const char* saved_pos_filename = nullptr;
+
+   const auto t3_type = vm_get_game_type(t3_fp);
+
+   if(t3_type == VM_GGT_TADS2) {
+      printf("VM_GGT_TADS2\n");
+   } else if(t3_type == VM_GGT_TADS3) {
+      printf("VM_GGT_TADS3\n");
+   } else {
+      printf("Error determining game type\n");
+   }
+
+   // t3vm_ret = FrobTadsApplicationCurses(frob_opts).runTads(
+   //     actualFilename, 1, progArgc, progArgv, savedPosFilename, netconfig);
+
+   // int t2vm_ret
+   //     = FrobTadsApplicationCurses(frob_opts).runTads(actualFilename, 0);
 }
 
 // ----------------------------------------------------------- load-t3-succeeded
